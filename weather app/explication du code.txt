@@ -1,0 +1,97 @@
+
+### HTML
+#### Balise `<head>` :
+- Définition de l'encodage et de la vue initiale.
+- Titre de la page : "Application météo".
+- Ajout du favicon (icône du site) avec le chemin vers une image de nuages.
+
+#### Balise `<body>` :
+- Structure HTML pour l'application météo.
+- Utilisation de la `<div>` avec la classe "card" pour contenir tous les éléments de la carte.
+- Utilisation de `<input>`, `<button>`, et plusieurs `<div>` pour la saisie de la ville, l'affichage des erreurs et des données météorologiques.
+
+### JavaScript
+- **Variables** :
+  - Définition d'une variable `apiKey` contenant la clé API OpenWeatherMap.
+  - Définition d'une variable `apiUrl` contenant l'URL de base pour les requêtes à l'API OpenWeatherMap.
+
+- **Sélection des éléments du DOM** :
+  - Utilisation de `document.querySelector` pour sélectionner les éléments du DOM tels que la boîte de recherche (`searchBox`), le bouton de recherche (`searchBtn`), et l'icône météorologique (`weatherIcon`).
+
+- **Fonction `checkWeather`** :
+  - Fonction asynchrone qui prend le nom de la ville comme argument.
+  - Effectue une requête à l'API OpenWeatherMap en utilisant `fetch` avec la clé API.
+  - Traite la réponse, affiche un message d'erreur si la ville n'est pas trouvée (HTTP 404), sinon met à jour les éléments du DOM avec les données météorologiques.
+
+- **Fonction `performSearch`** :
+  - Fonction qui récupère et nettoie le nom de la ville depuis la boîte de recherche.
+  - Appelle `checkWeather` avec le nom de la ville si la boîte de recherche n'est pas vide.
+
+- **Écouteurs d'événements** :
+  - Ajout d'un écouteur d'événements sur le bouton de recherche pour déclencher la recherche lorsque le bouton est cliqué.
+  - Ajout d'un écouteur d'événements pour la touche "Entrée" dans la boîte de recherche pour déclencher la recherche lorsque la touche "Entrée" est pressée.
+
+### CSS
+- **Sélecteur universel (`*`)** :
+  - Réinitialise les marges et les rembourrages de tous les éléments à zéro.
+  - Définit la police par défaut pour l'ensemble du document à "Poppins" et, s'il n'est pas disponible, à une police sans empattement (sans-serif).
+  - Utilise la boîte de modèle de bordure pour tous les éléments (`box-sizing: border-box;`), incluant les marges et les rembourrages dans la largeur et la hauteur totales.
+
+- **Sélecteur du corps (`body`)** :
+  - Définit la couleur de fond du corps sur "dimgray".
+
+- **Sélecteur de la classe `.card`** :
+  - Stylise la carte principale de l'application météo.
+  - Définit la largeur, la hauteur maximale, la couleur de fond (un dégradé), la couleur du texte, les marges, la bordure arrondie, le rembourrage, et le texte centré.
+
+- **Sélecteur de la classe `.search`** :
+  - Stylise la barre de recherche.
+  - Définit la largeur, l'affichage flex, l'alignement des éléments et l'espacement entre eux.
+
+- **Sélecteur de l'élément `input` à l'intérieur de la classe `.search`** :
+  - Stylise la zone de saisie de la recherche.
+  - Supprime la bordure, l'outline, définit la couleur de fond, la couleur du texte, les marges, le rembourrage, la hauteur, la bordure arrondie, la flexibilité, la taille de police, et le style de curseur.
+
+- **Sélecteur de l'élément `button` à l'intérieur de la classe `.search`** :
+  - Stylise le bouton de recherche.
+  - Supprime la bordure, l'outline, définit la couleur de fond, la bordure arrondie, la largeur, la hauteur et le style de curseur.
+
+- **Sélecteur de l'image (`img`) à l'intérieur du bouton de recherche (`button`)** :
+  - Stylise l'image à l'intérieur du bouton de recherche.
+  - Définit la largeur de l'image.
+
+- **Sélecteur de la classe `.weather-icon`** :
+  - Stylise l'icône météorologique.
+  - Définit la largeur de l'icône et la marge supérieure.
+
+- **Sélecteurs de classe pour les éléments `.weather h1` et `.weather h2`** :
+  - Stylisent les titres et sous-titres de l'affichage météo.
+
+- **Sélecteur de la classe `.details`** :
+  - Stylise la section des détails météorologiques.
+  - Définit l'affichage flex, l'alignement des éléments, l'espacement, la marge supérieure et le rembourrage.
+
+- **Sélecteur de la classe `.col`** :
+  - Stylise une colonne de détails météorologiques.
+  - Définit l'affichage flex, l'alignement des éléments et l'alignement du texte à gauche.
+
+- **Sélecteur de l'image (`img`) à l'intérieur de la
+
+ classe `.col`** :
+  - Stylise l'image à l'intérieur de la colonne de détails météorologiques.
+  - Définit la largeur de l'image et la marge à droite.
+
+- **Sélecteurs de classe pour les éléments `.humidity` et `.wind` à l'intérieur de la classe `.col`** :
+  - Stylisent les éléments de texte dans la colonne des détails météorologiques.
+
+- **Sélecteur de la classe `.weather`** :
+  - Stylise l'affichage des informations météorologiques (initialement caché).
+  - Sera affiché après une recherche réussie.
+
+- **Sélecteur de la classe `.error`** :
+  - Stylise la section des messages d'erreur.
+  - Définit le texte à gauche, la marge à gauche, la taille de police, la marge supérieure et est initialement caché (display: none;), s'affichant uniquement en cas d'erreur.
+
+---
+
+J'espère que cette réorganisation rend le texte plus clair et facile à suivre !

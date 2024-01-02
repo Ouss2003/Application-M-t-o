@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application météo</title>
+    <link rel="icon" href="images/clouds.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="search">
+        <input
+          type="text"
+          placeholder="Entrer le nom de la ville"
+          spellcheck="false"
+        />
+        <button><img src="images/search.png" /></button>
+      </div>
+      <div class="error">
+        <p>Nom de ville invalide</p>
+      </div>
+      <div class="weather">
+        <img src="images/rain.png" class="weather-icon" />
+        <h1 class="temp"></h1>
+        <h2 class="city"></h2>
+        <div class="details">
+          <div class="col">
+            <img src="images/humidity.png" />
+            <div>
+              <p class="humidity"></p>
+              <p>humidité</p>
+            </div>
+          </div>
+          <div class="col">
+            <img src="images/wind.png" />
+            <div>
+              <p class="wind"></p>
+              <p>vitesse du vent</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Clé API pour OpenWeatherMap
+      const apiKey = "76d3138321c9f48734a7d0085d9582b5";
+      // URL de base pour l'API OpenWeatherMap
+      const apiUrl =
+        "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+      // Sélection des éléments du DOM
+      const searchBox = document.querySelector(".search input");
+      const searchBtn = document.querySelector(".search button");
+      const weatherIcon = document.querySelector(".weather-icon");
+
+      // Fonction asynchrone pour vérifier la météo d'une ville
+      async function checkWeather(city) {
+        // Requête à l'API OpenWeatherMap avec la clé API et le nom de la ville
+        const response = await fetch(`${apiUrl + city}&appid=${apiKey}`);
+
+        // Vérification si la ville existe (réponse HTTP 404)
+        if (response.status == 404) {
+          // Affichage du message d'erreur si la ville n'est pas trouvée
+          document.querySelector(".error").style.display = "block";
+          document.querySelector(".weather").style.display = "none";
+        } else {
+          // Conversion de la réponse JSON
+          const data = await response.json();
+
+          // Mise à jour des éléments du DOM avec les données météorologiques
+          document.querySelector(".city").innerHTML = data.name;
+          document.querySelector(".temp").innerHTML =
+            Math.round(data.main.temp) + "°C";
+          document.querySelector(".humidity").innerHTML =
+            data.main.humidity + "%";
+          document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+
+          // Gestion des icônes météorologiques en fonction des conditions météorologiques
+          const weatherMain = data.weather[0].main.toLowerCase();
+          if (weatherMain === "clouds") {
+            weatherIcon.src = "images/clouds.png";
+          } else if (weatherMain === "clear") {
+            weatherIcon.src = "images/clear.png";
+          } else if (weatherMain === "rain") {
+            weatherIcon.src = "images/rain.png";
+          } else if (weatherMain === "drizzle") {
+            weatherIcon.src = "images/drizzle.png";
+          } else if (weatherMain === "mist") {
+            weatherIcon.src = "images/mist.png";
+          }
+
+          // Masquage du message d'erreur et affichage des informations météorologiques
+          document.querySelector(".error").style.display = "none";
+          document.querySelector(".weather").style.display = "block";
+        }
+      }
+
+      // Fonction pour effectuer la recherche de météo
+      function performSearch() {
+        // Récupération et nettoyage du nom de la ville à partir de la boîte de recherche
+        const cityName = searchBox.value.trim();
+        // Vérification si le champ de recherche n'est pas vide
+        if (cityName !== "") {
+          // Appel de la fonction pour vérifier la météo de la ville
+          checkWeather(cityName);
+        }
+      }
+
+      // Ajout d'un écouteur d'événements sur le bouton de recherche
+      searchBtn.addEventListener("click", performSearch);
+
+      // Ajout d'un écouteur d'événements pour la touche "Entrée" dans la boîte de recherche
+      searchBox.addEventListener("keyup", function (event) {
+        if (event.key === "Enter") {
+          // Appel de la fonction pour vérifier la météo lorsque la touche "Entrée" est pressée
+          performSearch();
+        }
+      });
+    </script>
+  </body>
+</html>
